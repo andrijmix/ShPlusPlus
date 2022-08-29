@@ -13,9 +13,14 @@ public class Assignment1Part3 extends KarelTheRobot {
      *
      * */
     public void run() throws Exception {
-        fullAllCellsExFirst();
-        TakeBeeperOnEnds();
+        if(!frontIsClear())
+        {
         putBeeper();
+        }else {
+            fullAllCellsExFirst();
+            TakeBeeperOnEnds();
+            putBeeper();
+        }
     }
 
     // Take beepers to the end
@@ -46,9 +51,10 @@ public class Assignment1Part3 extends KarelTheRobot {
     }
 //full cells beepers (ex first)
     private void fullAllCellsExFirst() throws Exception {
-       // turnLeft();
-        move();
+
+
         while (frontIsClear()) {
+            move();
             if (noBeepersPresent()) {
                 putBeeper();
             }

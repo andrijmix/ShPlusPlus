@@ -46,11 +46,7 @@ public class Assignment2Part5 extends WindowProgram {
             for (int k =(int) yCenter, j = 0; j < NUM_COLS; j++, k += (int) BOX_SIZE + BOX_SPACING) {
                 add(BuildSquare(l, k));
             }
-
-
         }
-
-
     }
 
     private GObject BuildSquare(int i, int j) {
