@@ -18,7 +18,7 @@ public class Assignment3Part2 extends TextProgram {
             } else      // if odd  number
                 println(n + " is odd so I make 3n + 1:" + (n = n * 3 + 1));
         }
-
+println("end");
     }
 
 }

@@ -49,7 +49,7 @@ public class Assignment3Part5 extends TextProgram {
                 money_on_table = 1;  //the sweaty put on table 1$
             }
         }
-        println("It took "+n_game+" games to earn $"+bank);
+        println("It took "+n_game+" games to earn $20");
     }
 
     /**
