@@ -31,7 +31,7 @@ public class Assignment2Part2 extends WindowProgram {
         add(createCircle(Color.BLACK, getWidth() - circleDiameter,
                 getHeight() - circleDiameter, circleDiameter));
 
-        add(createRect(Color.GRAY, circleDiameter / 2, circleDiameter / 2,
+        add(createRect(Color.WHITE, circleDiameter / 2, circleDiameter / 2,
                 getWidth() - circleDiameter, getHeight() - circleDiameter));
 
     }

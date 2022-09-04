@@ -33,8 +33,6 @@ public class Assignment2Part4 extends WindowProgram {
         add(createRect(Color.RED, x + FLAG_WIDTH + FLAG_WIDTH, y, FLAG_WIDTH, FLAG_HEIGHT));
 
         add(createLabel(), getWidth() - createLabel().getWidth(), getHeight() - createLabel().getDescent());
-
-
     }
 
     /**
@@ -73,7 +71,6 @@ public class Assignment2Part4 extends WindowProgram {
     private GLabel createLabel() {
         GLabel label = new GLabel("Flag of France");
         label.setFont("Helvetica-24");
-        double labelW = label.getWidth();
 
         return label;
     }

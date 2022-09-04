@@ -35,6 +35,7 @@ import java.util.Random;
 public class Assignment3Part5 extends TextProgram {
 
     public void run() {
+
         int bank = 0;  //On start the lucky have zero $
         int money_on_table = 1; //and the sweaty put on table 1$
         int n_game = 0; //count games

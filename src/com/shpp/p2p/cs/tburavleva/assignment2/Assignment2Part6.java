@@ -13,12 +13,12 @@ public class Assignment2Part6 extends WindowProgram {
     public static final int APPLICATION_HEIGHT = 240;
 
     /* oval overlay */
-    public static final int OVER = 20;
+    public static final int OVER = 30;
 
     /* The number of ovals our caterpillar
      * You can change the number of ovals of the caterpillar
      */
-    public static final int CATERPILLAR_NUMBER = 4;
+    public static final int CATERPILLAR_NUMBER = 10;
 
     public void run() {
         /* calculate diameter.

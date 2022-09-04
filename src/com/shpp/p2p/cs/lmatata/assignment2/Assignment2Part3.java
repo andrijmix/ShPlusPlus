@@ -55,7 +55,7 @@ public class Assignment2Part3 extends WindowProgram {
      * @param y The y coordinate of the upper-left corner of the bounding box for the pawprint.
      */
     /**
-     * A method for combining all elements of pawPrint
+     * A method for combining all elements of pawPrint.
      * */
     private void drawPawPrint(double x, double y) {
         drawPawItem(x + FIRST_TOE_OFFSET_X, y + FIRST_TOE_OFFSET_Y, TOE_WIDTH, TOE_HEIGHT);

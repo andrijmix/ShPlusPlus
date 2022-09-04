@@ -53,7 +53,7 @@ public class Assignment2Part3 extends WindowProgram {
     private void drawPawprint(double x, double y) {
 
         /*  first toe */
-        add(createOval(Color.BLACK, x, y + FIRST_TOE_OFFSET_Y, TOE_WIDTH, TOE_HEIGHT));
+        add(createOval(Color.BLACK, x + FIRST_TOE_OFFSET_X, y + FIRST_TOE_OFFSET_Y, TOE_WIDTH, TOE_HEIGHT));
 
         /*  second toe */
         add(createOval(Color.BLACK, x + SECOND_TOE_OFFSET_X, y + SECOND_TOE_OFFSET_Y, TOE_WIDTH, TOE_HEIGHT));

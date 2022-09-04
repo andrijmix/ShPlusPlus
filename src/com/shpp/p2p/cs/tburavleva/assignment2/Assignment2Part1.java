@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 public class Assignment2Part1 extends TextProgram {
     public void run() {
+
         double a, b, c;
 
         /*Get a, b and c values. Check the correctness of the input.*/
