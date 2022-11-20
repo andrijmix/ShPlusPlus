@@ -1,4 +1,13 @@
 package com.shpp.p2p.cs.amikhnevych.assignment3;
+
+
+import acm.graphics.GObject;
+import acm.graphics.GRect;
+import com.shpp.cs.a.graphics.WindowProgram;
+
+import java.awt.*;
+import java.util.ArrayList;
+
 /* TODO:
 Part 6 - Five seconds of fame
 We may not have covered animation yet, but we will soon. Well, for now, your task is to write
@@ -10,32 +19,33 @@ animation must contain 50+ frames. This means that FPS should be at least 10.
 An animation that wants 5 should fit on any computer in 5s ±150ms. For this, System.currentTimeMillis() will help you
 An animation that runs on some computer for less than 4s or more than 6s should get 2. Be creative!)
  */
-
-
-import acm.graphics.GObject;
-import acm.graphics.GRect;
-import com.shpp.cs.a.graphics.WindowProgram;
-
-import java.awt.*;
-
-
 public class Assignment3Part6 extends WindowProgram {
 
-    public static final double BRICK_HEIGHT = 6.5;
-    public static final double BRICK_WIDTH = 25;
-    public static final int BRICKS_IN_BASE = 20;
+
+    public static final double BRICK_HEIGHT = 6.5; // it is brick height
+    public static final double BRICK_WIDTH = 25; //and it is with for brick
+    public static final int BRICKS_IN_BASE = 20; //brick in first row (base)
     public static final double FPS = 45;
     public static final int MILLISECOND_IN_SEC = 1000;
     int fps_count = 0;
+    long time_1 = System.currentTimeMillis();
+
+    ArrayList<Integer> list = new ArrayList<>();
 
     public void run() {
+    
+        showAnimation();
+        println("fps on sec: " + fps_count / 5);
+        println("delta time: " + (System.currentTimeMillis() - time_1) / MILLISECOND_IN_SEC);
+
+    }
+
+    void showAnimation() {
+
+        long time_2 = System.currentTimeMillis() + 5 * MILLISECOND_IN_SEC;// end time
         int base = BRICKS_IN_BASE;  // local variable
         int x_start = (int) (getWidth() / 2 - (base * BRICK_WIDTH) / 2);  //start on Ox
         int y_start = (int) (getHeight() - BRICK_HEIGHT);                 // start on Oy
-        long time_1 = System.currentTimeMillis();
-        long time_2 = System.currentTimeMillis() + 5 * MILLISECOND_IN_SEC;// end time
-
-
         while (System.currentTimeMillis() < time_2) {
             buildRowOfWall(x_start, y_start, base);
             base--;  //There will be one less brick in the new row
@@ -43,9 +53,6 @@ public class Assignment3Part6 extends WindowProgram {
             y_start -= BRICK_HEIGHT;                 //center the new line Oy
 
         }
-        println("fps on sec: " + fps_count / 5);
-        println("delta time: " + (System.currentTimeMillis() - time_1) / MILLISECOND_IN_SEC);
-
     }
 
     /**

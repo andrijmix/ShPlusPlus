@@ -23,7 +23,10 @@ public class Assignment3Part3 extends TextProgram {
     public void run() {
         double base = 0.5;
         int exponent = -2;
+
+
         println(raiseToPower(base, exponent));
+        println(Math.pow(base, exponent));
     }
 
     /**

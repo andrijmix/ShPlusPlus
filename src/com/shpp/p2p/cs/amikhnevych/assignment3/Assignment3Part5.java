@@ -1,4 +1,10 @@
 package com.shpp.p2p.cs.amikhnevych.assignment3;
+
+
+import com.shpp.cs.a.console.TextProgram;
+
+import java.util.Random;
+
 /* TODO:
 Part 5 - St. Petersburg game
 This is a hypothetical casino game with a simple ideology. Two people play: the lucky one and the sweaty one.
@@ -26,31 +32,31 @@ This game, you earned $128
 Your total is $131
 It took 4 games to earn $20
  */
-
-import com.shpp.cs.a.console.TextProgram;
-
-import java.util.Random;
-
-
 public class Assignment3Part5 extends TextProgram {
+    static int MONEY_ON_TABLE = 1; //How many money you have ?
+    static int STOP_GAME = 20; //When do you want to stop?
+    int n_game = 0; //count games
 
     public void run() {
 
+        lens_go_to_game();
+        println("It took " + n_game + " games to earn $20");
+    }
+
+    // we will play this game
+    void lens_go_to_game() {
         int bank = 0;  //On start the lucky have zero $
-        int money_on_table = 1; //and the sweaty put on table 1$
-        int n_game = 0; //count games
-        while (bank < 20) {   //play until the lucky have less 20$
+        while (bank < STOP_GAME) {   //play until the lucky have less n$
             if (Coin().equals("eagle")) {
-                money_on_table *= 2;
+                MONEY_ON_TABLE *= 2;
             } else if (Coin().equals("tails")) {
-                bank += money_on_table;
-                println("This game, you earned $" + money_on_table);
+                bank += MONEY_ON_TABLE;
+                println("This game, you earned $" + MONEY_ON_TABLE);
                 println("Your total is $" + bank);
-                money_on_table = 1;  //the sweaty put on table 1$
+                MONEY_ON_TABLE = 1;  //the sweaty put on table 1$
                 n_game++;
             }
         }
-        println("It took " + n_game + " games to earn $20");
     }
 
     /**

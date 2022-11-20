@@ -31,30 +31,30 @@ public class Assignment2Part6 extends WindowProgram {
 
 
     public void run() {
-        double yCenter = getHeight() / 2.0 ;
-        int x1 = 0;
-        int y1 = (int)yCenter-SEGMENT_R;
+        double yCenter = getHeight() / 2.0;
+        int x1 = 10;
+        int y1 = (int) yCenter - SEGMENT_R;
         boolean upper_segment = true;
 
         /*
-        * flag upper_segment switches after iteration
-        * (in this way we adjust the height of the segment)
-        *
-        * next segment will have x1 and y1 on the haft radius previous segment
-        * */
+         * flag upper_segment switches after iteration
+         * (in this way we adjust the height of the segment)
+         *
+         * next segment will have x1 and y1 on the haft radius previous segment
+         * */
         for (int i = 0; i < NUM_SEGMENT; i++) {
-            add(DrawSegment(x1,y1));
-            x1=x1+SEGMENT_R*3/5;
-            if(upper_segment)
-            {
-                y1=y1-SEGMENT_R*3/5;
-            }else
-                y1=y1+SEGMENT_R*3/5;
+            add(DrawSegment(x1, y1));
+            x1 = x1 + SEGMENT_R * 3 / 5;
+            if (upper_segment) {
+                y1 = y1 - SEGMENT_R * 3 / 5;
+            } else
+                y1 = y1 + SEGMENT_R * 3 / 5;
 
             upper_segment = !upper_segment;
         }
 
     }
+
     /**
      * //+----------------------------------------------------------------------------+
      * //|  Description: This method return  object type oval and fill it color       |
@@ -65,10 +65,10 @@ public class Assignment2Part6 extends WindowProgram {
      * //+----------------------------------------------------------------------------+
      */
     private GObject DrawSegment(int x, int y) {
-        GOval circle = new GOval(x,y,SEGMENT_R,SEGMENT_R);
+        GOval circle = new GOval(x, y, SEGMENT_R, SEGMENT_R);
         circle.setFilled(true);
         circle.setFillColor(SEGMENT_COLOR);
-        if(circle.getColor()==SEGMENT_COLOR)
+        if (circle.getColor() == SEGMENT_COLOR)
             circle.setColor(Color.black);
         return circle;
     }

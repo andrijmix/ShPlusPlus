@@ -15,11 +15,17 @@ The pyramid can be centered horizontally and lie on the “days” of the window
 Constants — BRICK_HEIGHT, BRICK_WIDTH, BRICKS_IN_BASE
  */
 public class Assignment3Part4 extends WindowProgram {
-    public static final double BRICK_HEIGHT = 12;
-    public static final double BRICK_WIDTH = 50;
-    public static final int BRICKS_IN_BASE = 10;
+    public static final double BRICK_HEIGHT = 12; // it is brick height
+    public static final double BRICK_WIDTH = 50; //and it is with for brick
+    public static final int BRICKS_IN_BASE = 10; //brick in first row (base)
 
     public void run() {
+        // Starting to build a pyramid in the sandbox
+        buildMyselfPyramid();
+    }
+
+    // You will feel yourself like pharaoh, then it finished
+    void buildMyselfPyramid() {
         int base = BRICKS_IN_BASE;  // local variable
         int x_start = (int) (getWidth() / 2 - (base * BRICK_WIDTH) / 2);  //start on Ox
         int y_start = (int) (getHeight() - BRICK_HEIGHT);                 // start on Oy
