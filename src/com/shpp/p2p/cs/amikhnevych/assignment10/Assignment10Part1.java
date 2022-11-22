@@ -13,7 +13,7 @@ import static java.lang.Double.*;
 public class Assignment10Part1 {
     static ArrayList<String> PARSE_LIST = new ArrayList<>();
     static int numberOfTest = 0;
-    static Boolean Log = true;
+    static Boolean Log = false;
     //This sings supported by this version
     static String singSupport = "+-*/^";
 
@@ -25,20 +25,25 @@ public class Assignment10Part1 {
      * @param args An array of strings.
      */
     public static void main(String[] args) {
+        //TODO: delete  redundant brackets
         getResult(args);
-//        // test(0, new String[]{"  ", "a = 2,5", "x = -1", "b = 4.0", "c = 2.0"});
-//        test(-30, new String[]{"5-5 * 2-10/2-5 * 3-15/3"});
-//        test(0, new String[]{"1+a", "a=-1"});
-//        test(3, new String[]{"2+a", "a=1"});
-//        test(4, new String[]{" a + b / c ^ 2 ", "a=2", "b=32 ", "c = 4"});
-//        // test(-8.2, new String[]{"x + a * -2,5 - 4.8 / b + 2^-c", "a = 2,5", "x = -1", "b = 4.0", "c = 2.0"});
-//        test(11, new String[]{"x + a * 2 / 4 * b + 2^c", "a = 4", "x = -1", "b = 4.0", "c = 2.0"});
-//        // test(1, new String[]{"x + a * 2 - 4 / - b + -2^c", "a = 4,5", "x = -1", "b = 4.0", "c = 3.0"});
-//
-//        test(8, new String[]{"x + a * 2 / 4 * b + 2^c", "a = 4", "x = -1", "b = 4.0", "c = 0"});
-//        test(7, new String[]{"x + a * 2 / 4 * b + 0^c", "a = 4", "x = -1", "b = 4.0", "c = 2"});
-//        test(9, new String[]{"x + a * 2 / 4 * b + 4^c", "a = 4", "x = -1", "b = 4.0", "c = 0.5"});
-//        test(1, new String[]{"-x", "a = 4", "x = -1", "b = 4.0", "c = 0"});
+        // test(0, new String[]{"  ", "a = 2,5", "x = -1", "b = 4.0", "c = 2.0"});
+
+        //test(0, new String[]{"(5-5) * (2-10)/(2-5) * (3-15)/3"});
+        // test(0, new String[]{"(5-5) * (2-10)/(2-5) * (3-15)/3"});
+        test(0, new String[]{"((5-5)*(1+2*(3+2)))"});
+        test(-30, new String[]{"5-5 * 2-10/2-5 * 3-15/3"});
+        test(0, new String[]{"1+a", "a=-1"});
+        test(3, new String[]{"2+a", "a=1"});
+        test(4, new String[]{" a + b / c ^ 2 ", "a=2", "b=32 ", "c = 4"});
+        // test(-8.2, new String[]{"x + a * -2,5 - 4.8 / b + 2^-c", "a = 2,5", "x = -1", "b = 4.0", "c = 2.0"});
+        test(11, new String[]{"x + a * 2 / 4 * b + 2^c", "a = 4", "x = -1", "b = 4.0", "c = 2.0"});
+        // test(1, new String[]{"x + a * 2 - 4 / - b + -2^c", "a = 4,5", "x = -1", "b = 4.0", "c = 3.0"});
+
+        test(8, new String[]{"x + a * 2 / 4 * b + 2^c", "a = 4", "x = -1", "b = 4.0", "c = 0"});
+        test(7, new String[]{"x + a * 2 / 4 * b + 0^c", "a = 4", "x = -1", "b = 4.0", "c = 2"});
+        test(9, new String[]{"x + a * 2 / 4 * b + 4^c", "a = 4", "x = -1", "b = 4.0", "c = 0.5"});
+        test(1, new String[]{"-x", "a = 4", "x = -1", "b = 4.0", "c = 0"});
     }
 
     private static void test(double result, String[] formula) {
@@ -67,6 +72,7 @@ public class Assignment10Part1 {
         // extract formula
         String formula = args[0];
 // print final result
+        System.out.println("f: " + formula);
         double result = calculate(formula, variables);
         exceptions(result);
         System.out.println("result: " + result);
@@ -116,9 +122,9 @@ public class Assignment10Part1 {
 
         for (int i = 0; i < formula.length(); i++) {
 
+
             if (formula.charAt(i) >= '0' && formula.charAt(i) <= '9' || formula.charAt(i) == '.') {
                 num.append(formula.charAt(i));
-
             }
             //replace variables
             else if (formula.charAt(i) >= 'a' && formula.charAt(i) <= 'z') {
@@ -138,7 +144,9 @@ public class Assignment10Part1 {
                 }
                 num = new StringBuilder();
             }
-
+            if (formula.charAt(i) == '(' || formula.charAt(i) == ')') {
+                PARSE_LIST.add(String.valueOf(formula.charAt(i)));
+            }
         }
         if (num.length() > 0) {
             PARSE_LIST.add(num.toString());
@@ -178,49 +186,78 @@ public class Assignment10Part1 {
             }
         }
         brackets();
-        searchPow();
-        multiAndDiv();
-        number = additionAndSub();
+        searchPow(PARSE_LIST);
+        multiAndDiv(PARSE_LIST);
+        number = additionAndSub(PARSE_LIST);
         if (Log) System.out.println("formula: " + formula);
         if (Log) System.out.println("PARSE_LIST: " + PARSE_LIST);
         return number;
     }
 
+    /**
+     * Find brackets and calculate in brackets
+     */
     private static void brackets() {
         int openBracketsIndex = -1, closeBracketsIndex = -1;
+        double number;
         ArrayList<String> bracketsList = new ArrayList<>();
+
         for (int i = 0; i < PARSE_LIST.size(); i++) {
+            // find brackets
             if (Objects.equals(PARSE_LIST.get(i), "("))
                 openBracketsIndex = i;
             if (Objects.equals(PARSE_LIST.get(i), ")"))
                 closeBracketsIndex = i;
+
+            //if you have open and close brackets
             if (closeBracketsIndex != -1 && openBracketsIndex != -1) {
-                System.out.println("brackets: " + bracketsList.toString());
-                for (int j = openBracketsIndex; j < closeBracketsIndex; j++) {
-                    bracketsList.add(PARSE_LIST.get(i));
-                }
+                for (int j = openBracketsIndex + 1; j <= closeBracketsIndex - 1; j++)
+                    bracketsList.add(PARSE_LIST.get(j));
+
+                if (Log) System.out.println("brackets: " + bracketsList);
+                if (Log) System.out.println("PARSE_LIST: " + PARSE_LIST);
+                searchPow(bracketsList);
+                multiAndDiv(bracketsList);
+                number = additionAndSub(bracketsList);
+                deleteInBrackets(openBracketsIndex, closeBracketsIndex, number);
+                bracketsList.clear();
+                closeBracketsIndex = -1;
+                openBracketsIndex = -1;
+                i = 0;
             }
-
-
         }
+    }
+
+    /**
+     * Deleted elements in brackets list
+     *
+     * @param openBracketsIndex  - index of "("
+     * @param closeBracketsIndex - index of ")"
+     * @param number             - the result in brackets
+     */
+    private static void deleteInBrackets(int openBracketsIndex, int closeBracketsIndex, double number) {
+        if (closeBracketsIndex >= openBracketsIndex) {
+            PARSE_LIST.subList(openBracketsIndex, closeBracketsIndex + 1).clear();
+        }
+        PARSE_LIST.add(openBracketsIndex, String.valueOf(number));
     }
 
     /**
      * Find and calculation multiplication and division
      */
-    private static void multiAndDiv() {
+    private static void multiAndDiv(ArrayList<String> List) {
         double number;
-        for (int i = 0; i < PARSE_LIST.size(); i++) {
+        for (int i = 0; i < List.size(); i++) {
             //find "*" calculation and delete Elements
-            if (Objects.equals(PARSE_LIST.get(i), "*")) {
-                number = Double.parseDouble(PARSE_LIST.get(i - 1)) * Double.parseDouble(PARSE_LIST.get(i + 1));
-                deleteElements(number, PARSE_LIST, i - 1);
+            if (Objects.equals(List.get(i), "*")) {
+                number = Double.parseDouble(List.get(i - 1)) * Double.parseDouble(List.get(i + 1));
+                deleteElements(number, List, i - 1);
                 i = 0;
             } else
                 //find "/" calculation and delete Elements
-                if (Objects.equals(PARSE_LIST.get(i), "/")) {
-                    number = Double.parseDouble(PARSE_LIST.get(i - 1)) / Double.parseDouble(PARSE_LIST.get(i + 1));
-                    deleteElements(number, PARSE_LIST, i - 1);
+                if (Objects.equals(List.get(i), "/")) {
+                    number = Double.parseDouble(List.get(i - 1)) / Double.parseDouble(List.get(i + 1));
+                    deleteElements(number, List, i - 1);
                     i = 0;
                 }
         }
@@ -229,12 +266,12 @@ public class Assignment10Part1 {
     /**
      * Find and calculation Pow
      */
-    private static void searchPow() {
+    private static void searchPow(ArrayList<String> List) {
         double number;
-        for (int i = 0; i < PARSE_LIST.size(); i++) {
-            if (Objects.equals(PARSE_LIST.get(i), "^")) {
-                number = Math.pow(Double.parseDouble(PARSE_LIST.get(i - 1)), Double.parseDouble(PARSE_LIST.get(i + 1)));
-                deleteElements(number, PARSE_LIST, i - 1);
+        for (int i = 0; i < List.size(); i++) {
+            if (Objects.equals(List.get(i), "^")) {
+                number = Math.pow(Double.parseDouble(List.get(i - 1)), Double.parseDouble(List.get(i + 1)));
+                deleteElements(number, List, i - 1);
             }
         }
     }
@@ -261,15 +298,15 @@ public class Assignment10Part1 {
      *
      * @return the final result for formula
      */
-    private static double additionAndSub() {
-        double number = Double.parseDouble(PARSE_LIST.get(0));
-        for (int i = 1; i < PARSE_LIST.size(); i++) {
+    private static double additionAndSub(ArrayList<String> List) {
+        double number = Double.parseDouble(List.get(0));
+        for (int i = 1; i < List.size(); i++) {
             //if we find "+" - make addition last number for number from list
-            if (Objects.equals(PARSE_LIST.get(i), "+")) {
-                number += Double.parseDouble(PARSE_LIST.get(i + 1));
+            if (Objects.equals(List.get(i), "+")) {
+                number += Double.parseDouble(List.get(i + 1));
                 // make subtraction
-            } else if (Objects.equals(PARSE_LIST.get(i), "-")) {
-                number -= Double.parseDouble(PARSE_LIST.get(i + 1));
+            } else if (Objects.equals(List.get(i), "-")) {
+                number -= Double.parseDouble(List.get(i + 1));
             }
         }
         return number;
